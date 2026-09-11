@@ -1,4 +1,6 @@
-﻿using Garage;
+﻿using System.Collections.Generic;
+using Cooperative;
+using Garage;
 using UnityEngine;
 
 namespace UI
@@ -9,16 +11,37 @@ namespace UI
         [SerializeField] private GarageCard garageCardPrefab;
         [SerializeField] private Transform contentParent;
         [SerializeField] private GarageDetailsUI detailsUI;
-
-        private void Start()
+        
+        public void EnableObject(bool enable)
         {
-            CreateGarageCards();
+            gameObject.SetActive(enable);
         }
-
-        private void CreateGarageCards()
+        
+        public void ClearList()
+        {
+            for (int i = contentParent.childCount - 1; i >= 0; i--)
+            {
+                Destroy(contentParent.GetChild(i).gameObject);
+            }
+        }
+        
+        public void CreateGarageCards()
         {
             foreach (GarageData garage in garageManager.Garages)
             {
+                GarageCard card = Instantiate(garageCardPrefab, contentParent);
+                card.Setup(garage, detailsUI);
+            }
+        }
+        
+        public void ShowAvailableGarages(CooperativeData cooperative)
+        {
+            ClearList();
+            foreach (GarageData garage in garageManager.Garages)
+            {
+                if(garage.cooperative != cooperative)
+                    continue;
+                
                 GarageCard card = Instantiate(garageCardPrefab, contentParent);
                 card.Setup(garage, detailsUI);
             }

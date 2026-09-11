@@ -15,4 +15,4 @@ MonoBehaviour:
   repairName: Floor
   cost: 600
   conditionIncrease: 0.2
-  repairingTime: 120
+  repairingTime: 6
