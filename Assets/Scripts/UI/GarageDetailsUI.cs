@@ -48,7 +48,7 @@ namespace UI
                 $"Condition: {currRuntimeData.CurrentCondition * 100:0}%\n" +
                 $"Purchase Price: ${purchasePrice:N0}\n" +
                 $"Market Value: ${marketValue:N0}\n" +
-                $"Rent: ${garage.monthlyRent:N0}/month\n" +
+                $"Rent: ${garage.monthlyRent*garage.condition:N0}/month\n" +
                 $"{GetDealRate(priceDifference)}";
 
             UpdateOwnershipUI(currRuntimeData);
@@ -96,7 +96,7 @@ namespace UI
                 $"Condition: {currRuntimeData.CurrentCondition * 100:0}%\n" +
                 /*$"Purchase Price: ${purchasePrice:N0}\n" +*/
                 $"Market Value: ${marketValue:N0}\n" +
-                $"Rent: ${currRuntimeData.Data.monthlyRent:N0}/month\n" +
+                $"Rent: ${currRuntimeData.Data.monthlyRent * currRuntimeData.CurrentCondition:N0}/month\n" +
                 $"{GetDealRate(priceDifference)}";
         }
 

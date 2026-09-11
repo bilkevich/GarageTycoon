@@ -21,28 +21,41 @@ namespace UI
         {
             currRuntimeData = runtimeData;
             this.detailsUI = detailsUI;
-            repairText.text = repairData.repairName;
-            priceText.text = $"Price: {repairData.cost}";
             this.repairData = repairData;
 
-            //if repair is already completed disable button
+            repairText.text = repairData.repairName;
+            priceText.text = $"Price: {repairData.cost}";
+            
+            currRuntimeData.OnRepairCompleted -= HandleRepairCompleted;
+
+            // Repair already completed
             if (runtimeData.IsRepairCompleted(repairData))
             {
                 repairButton.gameObject.SetActive(false);
                 timerText.gameObject.SetActive(false);
                 return;
             }
-            InitRepairTimer(repairData);
-            
-            repairButton.onClick.RemoveAllListeners();
-            repairButton.onClick.AddListener(()=> OnRepairClicked(runtimeData));
-        }
 
-        //unsubscribe from event when object is disable
-        private void OnDisable()
-        {
+            timerText.gameObject.SetActive(true);
+
+            // Repair is currently running
+            if (runtimeData.IsRepairing &&
+                runtimeData.CurrentRepair.repairName == repairData.repairName)
+            {
+                repairButton.gameObject.SetActive(false);
+
+                SubscribeToRepairCompleted();
+            }
+            else
+            {
+                repairButton.gameObject.SetActive(true);
+
+                repairButton.onClick.RemoveAllListeners();
+                repairButton.onClick.AddListener(() => OnRepairClicked(runtimeData));
+
+                InitRepairTimer(repairData);
+            }
             
-            currRuntimeData.OnRepairCompleted -= HandleRepairCompleted;
         }
 
         private void OnRepairClicked(GarageRuntimeData runtimeData)
@@ -51,13 +64,14 @@ namespace UI
                 return;
                 
             repairButton.gameObject.SetActive(false);
-            currRuntimeData = runtimeData;
-            runtimeData.OnRepairCompleted += HandleRepairCompleted;
+            
+            SubscribeToRepairCompleted();
         }
 
         private void HandleRepairCompleted()
         {
             currRuntimeData.OnRepairCompleted -= HandleRepairCompleted;
+            timerText.gameObject.SetActive(false);
             detailsUI.UpdateSellText();
         }
 
@@ -75,21 +89,45 @@ namespace UI
         public void UpdateRepairTimer(GarageRuntimeData garage)
         {
             int secondsRemaining = garage.GetRepairTimeRemaining();
+            //Debug.LogError($"{secondsRemaining}");
+            int days = secondsRemaining / 60;
+            int remainingSeconds = secondsRemaining % 60;
 
-            int minutes = secondsRemaining / 60;
-            int seconds = secondsRemaining % 60;
+            int hours = remainingSeconds * 24 / 60;
+            int minutes = remainingSeconds * 24 * 60 / 60 % 60;
 
-            timerText.text = $"{minutes:00}:{seconds:00}";
+            timerText.text = $"{days:00}d {hours:00}h {minutes:00}m";
         }
         
         public void InitRepairTimer(GarageRepairData garage)
         {
             int secondsRemaining = garage.repairingTime;
 
-            int minutes = secondsRemaining / 60;
-            int seconds = secondsRemaining % 60;
+            int days = secondsRemaining / 60;
+            int remainingSeconds = secondsRemaining % 60;
 
-            timerText.text = $"{minutes:00}:{seconds:00}";
+            int hours = remainingSeconds * 24 / 60;
+            int minutes = remainingSeconds * 24 * 60 / 60 % 60;
+
+            timerText.text = $"{days:00}d {hours:00}h {minutes:00}m";
+        }
+        
+        private void SubscribeToRepairCompleted()
+        {
+            if (currRuntimeData == null)
+                return;
+
+            currRuntimeData.OnRepairCompleted -= HandleRepairCompleted;
+            currRuntimeData.OnRepairCompleted += HandleRepairCompleted;
+        }
+        
+        //unsubscribe from event when object is disable
+        private void OnDisable()
+        {
+            if (currRuntimeData != null)
+            {
+                currRuntimeData.OnRepairCompleted -= HandleRepairCompleted;
+            }
         }
     }
 }

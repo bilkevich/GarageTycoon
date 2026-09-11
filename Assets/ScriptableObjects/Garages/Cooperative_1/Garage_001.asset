@@ -17,7 +17,7 @@ MonoBehaviour:
   area: 24
   condition: 0.4
   BasePrice: 7000
-  monthlyRent: 135
+  monthlyRent: 150
   availableRepairs:
   - {fileID: 11400000, guid: 5372a4dcaadfd6c47b8b57d8836c9723, type: 2}
   - {fileID: 11400000, guid: 42840f0f03d742449976b1dcf2f5371f, type: 2}

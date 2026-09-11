@@ -14,7 +14,7 @@ namespace Garage
         [Header("Condition")]
         [Range(0f, 1f)]
         public float conditionIncrease;
-
+        [Tooltip("1 game day - 60 seconds")]
         public int repairingTime = 2;
     }
 }

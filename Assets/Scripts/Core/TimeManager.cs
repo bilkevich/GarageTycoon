@@ -6,13 +6,16 @@ namespace Core
     {
         public static TimeManager Instance { get; private set; }
 
-        [Header("Time Settings")] [SerializeField]
-        private float secondsPerDay = 60f;
+        [Header("Time Settings")]
+        [SerializeField] private float secondsPerDay = 60f;
 
         [SerializeField] private int daysPerMonth = 30;
 
         public int CurrentDay { get; private set; } = 1;
         public int CurrentMonth { get; private set; } = 1;
+
+        // Total game time in seconds
+        public float GameTime { get; private set; }
 
         private float dayTimer;
 
@@ -29,17 +32,21 @@ namespace Core
 
         private void Update()
         {
-            dayTimer += Time.deltaTime;
+            float deltaTime = Time.deltaTime;
+
+            GameTime += deltaTime;
+            dayTimer += deltaTime;
 
             if (dayTimer >= secondsPerDay)
             {
+                dayTimer -= secondsPerDay;
+
                 NextDay();
             }
         }
 
         private void NextDay()
         {
-            dayTimer = 0f;
             CurrentDay++;
 
             Debug.Log($"New day started: Day {CurrentDay}, Month {CurrentMonth}");
@@ -62,10 +69,17 @@ namespace Core
                 GarageManager.Instance.ProcessMonthlyIncome();
             }
         }
-        
+
         public void AdvanceDay()
         {
+            GameTime += secondsPerDay;
+
             NextDay();
+        }
+
+        public float GetSecondsPerDay()
+        {
+            return secondsPerDay;
         }
     }
 }

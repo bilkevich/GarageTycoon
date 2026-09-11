@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Core;
 using UnityEngine;
 
 namespace Garage
@@ -81,8 +82,7 @@ namespace Garage
             IsRepairing = true;
             CurrentRepair = repair;
 
-            RepairEndTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds()
-                            + (long)repair.repairingTime;
+            RepairEndTime = (long)TimeManager.Instance.GameTime + repair.repairingTime;
 
             return true;
         }
@@ -92,7 +92,7 @@ namespace Garage
             if (!IsRepairing)
                 return;
             
-            long currentTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            float currentTime = TimeManager.Instance.GameTime;
 
             if (currentTime < RepairEndTime)
                 return;
@@ -105,9 +105,10 @@ namespace Garage
             if (!IsRepairing)
                 return 0;
 
-            long currentTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-
-            return Mathf.Max(0, (int)(RepairEndTime - currentTime));
+            return Mathf.Max(
+                0,
+                Mathf.CeilToInt(RepairEndTime - TimeManager.Instance.GameTime)
+            );
         }
 
         private void CompleteRepair()
