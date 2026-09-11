@@ -12,12 +12,26 @@ namespace Cooperative
         [SerializeField] private CooperativeData cooperativeData;
         [SerializeField] private Button button;
         [SerializeField] private GarageListUI garageListUI;
-        //[SerializeField] private MapUI mapUI;
+        [SerializeField] private bool isLocked;
+        [SerializeField] private GameObject lockOverlay;
 
         private void Awake()
         {
             button.onClick.AddListener(OnClicked);
             FillInfo();
+
+            if (isLocked)
+            {
+                lockOverlay.SetActive(true);
+                infoText.gameObject.SetActive(false);
+            }
+        }
+
+        public void UnlockCooperative()
+        {
+            isLocked = false;
+            lockOverlay.SetActive(false);
+            infoText.gameObject.SetActive(true);
         }
 
         private void FillInfo()
