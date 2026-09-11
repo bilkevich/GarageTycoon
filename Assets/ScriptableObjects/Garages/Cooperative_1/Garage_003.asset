@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8996ba3083a440c8bc9e3051350a3c4, type: 3}
+  m_Name: Garage_003
+  m_EditorClassIdentifier: Assembly-CSharp::Garage.GarageData
+  id: 3
+  garageName: Garage 3
+  area: 20
+  condition: 0.3
+  BasePrice: 5460
+  monthlyRent: 65
+  availableRepairs:
+  - {fileID: 11400000, guid: eb0817416d1606e4684fbf7f0cf32dfe, type: 2}
+  - {fileID: 11400000, guid: 4ac12f8a2f108f2419bc032b16c0a548, type: 2}
+  - {fileID: 11400000, guid: 5372a4dcaadfd6c47b8b57d8836c9723, type: 2}
+  cooperative: {fileID: 11400000, guid: 89beb3326aa193540bf8dbf01784c49a, type: 2}
