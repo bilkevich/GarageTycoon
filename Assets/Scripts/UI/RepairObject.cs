@@ -41,6 +41,7 @@ namespace UI
         //unsubscribe from event when object is disable
         private void OnDisable()
         {
+            
             currRuntimeData.OnRepairCompleted -= HandleRepairCompleted;
         }
 
