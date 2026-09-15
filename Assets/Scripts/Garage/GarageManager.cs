@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Core;
 using Garage;
 using UnityEngine;
 
@@ -90,6 +91,11 @@ public class GarageManager : MonoBehaviour
 
         garage.SetOwned();
 
+        TransactionManager.Instance.AddTransaction(
+            $"Bought {garage.Data.garageName}",
+            -price
+        );
+        
         Debug.Log($"Garage purchased: {garage.Data.garageName}");
 
         return true;
@@ -175,6 +181,11 @@ public class GarageManager : MonoBehaviour
 
         garage.SetSold();
 
+        TransactionManager.Instance.AddTransaction(
+            $"Sold {garage.Data.garageName}",
+            salePrice
+        );
+        
         Debug.Log($"Garage sold: {garage.Data.garageName} for ${salePrice:N0}");
 
         return true;

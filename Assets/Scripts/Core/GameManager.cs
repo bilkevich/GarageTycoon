@@ -1,5 +1,6 @@
 using Garage;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,6 +9,10 @@ public class GameManager : MonoBehaviour
     [Header("Player")]
     [SerializeField] private float startingMoney = 20000f;
 
+    [SerializeField] private GameObject transactionPanel;
+    [SerializeField] private UserInput userInput;
+    
+    public UserInput UserInput => userInput;
     public float Money { get; private set; }
 
     private void Awake()
@@ -22,6 +27,7 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         Money = startingMoney;
+        //UserInput.
     }
 
     public bool TrySpendMoney(float amount)
@@ -42,5 +48,11 @@ public class GameManager : MonoBehaviour
             return;
 
         Money += amount;
+    }
+
+    private void OnShowTransactionHistory(InputAction.CallbackContext context)
+    {
+        Debug.LogError("OnShowTransactionHistory!!!!!!!!");
+        transactionPanel.SetActive(transactionPanel.activeInHierarchy);
     }
 }

@@ -76,9 +76,18 @@ namespace Garage
             if (IsRepairing)
                 return false;
 
-            if (!GameManager.Instance.TrySpendMoney(repair.baseCost))
+            float repairCost =
+                repair.baseCost +
+                Data.area * repair.costPerSquareMeter;
+            
+            if (!GameManager.Instance.TrySpendMoney(repairCost))
                 return false;
 
+            TransactionManager.Instance.AddTransaction(
+                $"{repair.repairName} repair - {Data.garageName}",
+                -repairCost
+            );
+            
             IsRepairing = true;
             CurrentRepair = repair;
 
