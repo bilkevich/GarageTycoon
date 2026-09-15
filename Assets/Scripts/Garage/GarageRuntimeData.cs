@@ -76,7 +76,7 @@ namespace Garage
             if (IsRepairing)
                 return false;
 
-            if (!GameManager.Instance.TrySpendMoney(repair.cost))
+            if (!GameManager.Instance.TrySpendMoney(repair.baseCost))
                 return false;
 
             IsRepairing = true;
@@ -115,7 +115,7 @@ namespace Garage
         {
             completedRepairs.Add(CurrentRepair);
 
-            RepairedPrice += CurrentRepair.cost;
+            RepairedPrice += CurrentRepair.baseCost;
             
             CurrentCondition += CurrentRepair.conditionIncrease;
             CurrentCondition = Mathf.Clamp01(CurrentCondition);

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Repair_Roof
   m_EditorClassIdentifier: Assembly-CSharp::Garage.GarageRepairData
   repairName: Roof
-  cost: 500
+  baseCost: 400
+  costPerSquareMeter: 15
   conditionIncrease: 0.4
   repairingTime: 10

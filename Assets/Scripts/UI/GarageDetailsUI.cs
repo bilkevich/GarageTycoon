@@ -83,9 +83,9 @@ namespace UI
         //update info after we complete repair
         public void UpdateSellText()
         {
-            sellText.text = $"SELL : {GarageValuation.GetSellPrice(currRuntimeData, currRuntimeData.Data)}";
+            sellText.text = $"SELL : {GarageValuation.GetSellPrice(currRuntimeData, currRuntimeData.Data):0}";
             var purchasePrice = GarageValuation.GetPurchasePrice(currRuntimeData.Data);
-            buyText.text = $"BUY : {purchasePrice}";
+            buyText.text = $"BUY : {purchasePrice:0}";
 
             float marketValue =
                 GarageValuation.GetPossibleValue(currRuntimeData.Data);

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Garage;
 using TMPro;
 using UnityEngine;
@@ -9,10 +10,14 @@ namespace UI
 {
     public class RepairObject : MonoBehaviour
     {
-        [Header("UI")] [SerializeField] private TMP_Text repairText;
+        [Header("UI")] 
+        [SerializeField] private TMP_Text repairText;
         [SerializeField] private TMP_Text priceText;
+        [SerializeField] private TMP_Text conditionIncreaseText;
+        [SerializeField] private TMP_Text increasePriceText;
         [SerializeField] private TMP_Text timerText;
         [SerializeField] private Button repairButton;
+        [SerializeField] private List<GameObject> repairUIInfo;
         private GarageDetailsUI detailsUI;
         
         GarageRepairData repairData;
@@ -24,8 +29,13 @@ namespace UI
             this.repairData = repairData;
 
             repairText.text = repairData.repairName;
-            priceText.text = $"Price: {repairData.cost}";
+            float repairCost =
+                repairData.baseCost +
+                runtimeData.Data.area * repairData.costPerSquareMeter;
             
+            priceText.text = $"Price: {repairCost}";
+            conditionIncreaseText.text = $"+ {repairData.conditionIncrease*100}%";
+            increasePriceText.text = $"+ {GarageValuation.GetPossibleSellPrice(currRuntimeData.Data, repairData) - GarageValuation.GetSellPrice(currRuntimeData, currRuntimeData.Data):0}$";
             currRuntimeData.OnRepairCompleted -= HandleRepairCompleted;
 
             // Repair already completed
@@ -73,6 +83,10 @@ namespace UI
             currRuntimeData.OnRepairCompleted -= HandleRepairCompleted;
             timerText.gameObject.SetActive(false);
             detailsUI.UpdateSellText();
+            foreach (var obj in repairUIInfo)
+            {
+                obj.SetActive(true);
+            }
         }
 
         private void Update()

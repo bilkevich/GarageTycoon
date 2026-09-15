@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Repair_Floor
   m_EditorClassIdentifier: Assembly-CSharp::Garage.GarageRepairData
   repairName: Floor
-  cost: 600
+  baseCost: 500
+  costPerSquareMeter: 15
   conditionIncrease: 0.2
   repairingTime: 6

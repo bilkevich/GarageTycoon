@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Cooperative_1
   m_EditorClassIdentifier: Assembly-CSharp::Cooperative.CooperativeData
   cooperativeName: Green Valley
-  repairPriceMultiplier: 1.1
+  repairPriceMultiplier: 1
   attractivenessMultiplier: 1.3

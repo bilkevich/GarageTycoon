@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Garage.GarageData
   id: 3
   garageName: Garage 3
-  area: 20
+  area: 10
   condition: 0.3
   BasePrice: 5460
   monthlyRent: 90

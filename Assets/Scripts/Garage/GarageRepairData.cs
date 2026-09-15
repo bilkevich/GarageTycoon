@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Garage
 {
@@ -8,9 +9,10 @@ namespace Garage
         [Header("Repair Information")]
         public string repairName;
 
-        [Header("Economy")]
-        public float cost;
-
+        [FormerlySerializedAs("cost")] [Header("Economy")]
+        public float baseCost;
+        public float costPerSquareMeter;
+        
         [Header("Condition")]
         [Range(0f, 1f)]
         public float conditionIncrease;

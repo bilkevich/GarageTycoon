@@ -22,6 +22,19 @@ namespace Garage
                    garage.cooperative.attractivenessMultiplier *
                    GetSizeMultiplayer(garage);
         }
+        
+        //get possible price after repair
+        public static float GetPossibleSellPrice(GarageData garage, GarageRepairData repair)
+        {
+            GarageRuntimeData runtimeData =
+                GarageManager.Instance.GetRuntimeData(garage.id);
+            var newCondition = runtimeData.CurrentCondition + repair.conditionIncrease;
+            return garage.BasePrice *
+                   (.5f + newCondition * .5f) *
+                   garage.cooperative.attractivenessMultiplier *
+                   GetSizeMultiplayer(garage)+
+                   repair.baseCost * garage.cooperative.repairPriceMultiplier;
+        }
         //the price what we get when garage has perfect conditions
         public static float GetPossibleValue(GarageData garage)
         {
