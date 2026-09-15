@@ -141,6 +141,12 @@ public class GarageManager : MonoBehaviour
             if (runtimeData != null && runtimeData.IsRented)
             {
                 float income = runtimeData.GetMonthlyIncome();
+                
+                TransactionManager.Instance.AddTransaction(
+                    $"Rent - {garage.garageName}",
+                    income
+                );
+                
                 totalIncome += income;
 
                 Debug.Log(
